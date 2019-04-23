@@ -68,7 +68,7 @@ class ContactController extends Controller {
             'primary_phone_no' => 'required|digits:10|unique:contacts,primary_phone_no',
             'secondary_phone_no' => 'unique:contacts,secondary_phone_no|nullable',
         ]);
-
+        $image_name = '';
         if (Input::hasFile('contact_image')) {
             $file = Input::file('contact_image');
             $image_name = $file->getClientOriginalName();
@@ -118,7 +118,6 @@ class ContactController extends Controller {
             $file = Input::file('contact_image');
             $image_name = $file->getClientOriginalName();
             $file->move(storage_path('images'), $image_name);
-//            $image_name = $_FILES['contact_image']['name'];
             
         } else {
             $image_name = $_POST['old_contact_image'];
@@ -222,7 +221,8 @@ class ContactController extends Controller {
         $contact_detail = Contact::find($request->id);
 
         if($contact_detail->delete())
-        {
+        {   
+            ContactUser::where('contact_id', $request->id)->delete();
             echo 'Contact has been deleted successfully!';
         }
     }

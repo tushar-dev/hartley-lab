@@ -15,10 +15,12 @@ class CreateContactUsersTable extends Migration
     {
         Schema::create('contact_users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('user_id')->index();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('contact_id')->index();
-            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
+            $table->bigInteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+//            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->bigInteger('contact_id')->unsigned();
+            $table->foreign('contact_id')->references('id')->on('contacts');
+//            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
             $table->enum('is_shared', ['0', '1'])->default('0');
             $table->timestamps();
         });
