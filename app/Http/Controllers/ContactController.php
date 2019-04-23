@@ -222,7 +222,6 @@ class ContactController extends Controller {
 
         if($contact_detail->delete())
         {   
-            ContactUser::where('contact_id', $request->id)->delete();
             echo 'Contact has been deleted successfully!';
         }
     }
